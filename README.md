@@ -2,10 +2,13 @@
 
 **An overview of the code:**
 
-The way the code starts is it starts with an initialization constructor which initializes all of the variables and then creates a map/dictionary that contains the bus number and slave addressees for P0 and P1 which then allows in the other methods to call it by calling that certain method. In that same method you can call the dimm-info.sh which also shows which DIMMS are populated so when you run the code you are able to figure out if the system will shutdown and which will not.
-The next method is the method which connects the BMC to the SSH and prints the error registers of the certain error that you requested to shutdown/hang the system. 
- Most of the other methods except for the last one are all methods are for the errors. They will print out the error and the command and say if a fatal, non-fatal, or a vendor-specific error has been printed and that will determine if an AC cycle is required.
-The final method is a print menu method which prints out all the options of the errors: the MISC errors, the under voltage and the over voltage errors when you run the program. The print menu will show that the command is running with a print statement
+1. The way the code starts is it starts with an initialization constructor which initializes all of the variables and then creates a map/dictionary that contains the bus number and slave addressees for P0 and P1 which then allows in the other methods to call it by calling that certain method. In that same method you can call the dimm-info.sh which also shows which DIMMS are populated so when you run the code you are able to figure out if the system will shutdown and which will not.
+
+2. The next method is the method which connects the BMC to the SSH and prints the error registers of the certain error that you requested to shutdown/hang the system.
+
+3.Most of the other methods except for the last one are all methods are for the errors. They will print out the error and the command and say if a fatal, non-fatal, or a vendor-specific error has been printed and that will determine if an AC cycle is required.
+
+4.The final method is a print menu method which prints out all the options of the errors: the MISC errors, the under voltage and the over voltage errors when you run the program. The print menu will show that the command is running with a print statement
 
 
 **The Main Function:**
