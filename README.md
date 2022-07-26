@@ -12,7 +12,7 @@ The final method is a print menu method which prints out all the options of the 
 
 An argparse was written in the main function which allows you to input the correct arguments to run the program. Argparse is a user-friendly command line interface. Argparse is used when you need command-line arguments. There are 5 parser.add() arguments in the main function that are required. Those are described below and detailed in the format. Then the print_menu() is being called. When that is called then the options are able to be printed out
 
-In order to run the code you need to 
+**In order to run the code you need to:**
 
 1. put python3 pmicErrorInjectionTool.py host name, the username, the password, the DIMMS (2 options P0 or P1) and the channel name
 
