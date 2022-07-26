@@ -14,3 +14,4 @@ Then the system will hang or shutdown if it is a fatal error or neither if it is
 
 4. AC Cycle Required to recover the system if a fatal error is injected 
 
+https://confluence.amd.com/display/ES/PMIC+Error+Injection+Tool
