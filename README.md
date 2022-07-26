@@ -6,9 +6,9 @@
 
 2. The next method is the method which connects the BMC to the SSH and prints the error registers of the certain error that you requested to shutdown/hang the system.
 
-3.Most of the other methods except for the last one are all methods are for the errors. They will print out the error and the command and say if a fatal, non-fatal, or a vendor-specific error has been printed and that will determine if an AC cycle is required.
+3. Most of the other methods except for the last one are all methods are for the errors. They will print out the error and the command and say if a fatal, non-fatal, or a vendor-specific error has been printed and that will determine if an AC cycle is required.
 
-4.The final method is a print menu method which prints out all the options of the errors: the MISC errors, the under voltage and the over voltage errors when you run the program. The print menu will show that the command is running with a print statement
+4. The final method is a print menu method which prints out all the options of the errors: the MISC errors, the under voltage and the over voltage errors when you run the program. The print menu will show that the command is running with a print statement
 
 
 **The Main Function:**
