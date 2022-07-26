@@ -50,5 +50,6 @@ When you pick the error type it the way it is written it the options
 Once you pick the command you will get the output which either depending on the error will shutdown the system or do nothing depending on if it is a fatal error or not
 
 **Confluence Page**
-The confluence page is a very detailed descreption of everything in the ReadMe and has more information
+
+The confluence page has a very detailed descreption of everything in the ReadMe and has more information
 https://confluence.amd.com/display/ES/PMIC+Error+Injection+Tool
