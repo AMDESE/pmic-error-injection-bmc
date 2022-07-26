@@ -5,7 +5,7 @@
 The PMIC Error Injection Tool will shutdown the system you are running the script on if a fatal error is injected into the system. Only certain errors are fatal depending on the type of error injected into the system. The tool connects BMC to SSH to shutdown/hang if the injected error is fatal.
 
 **Paramiko Library:**
-This code uses a Python library that makes a connection with a remote device through SSH. Paramiko provides a client server functionality.
+This code uses a Python library called Paramiko that makes a connection with a remote device through SSH. Paramiko provides a client server functionality.
 
 **An overview of the code:**
 
@@ -19,3 +19,6 @@ This code uses a Python library that makes a connection with a remote device thr
 **The Main Function:**
 
 An argparse was written in the main function which allows you to input the correct arguments to run the program. Argparse is a user-friendly command line interface. Argparse is used when you need command-line arguments. There are 5 parser.add() arguments in the main function that are required. Those are described below and detailed in the format. Then the print_menu() is being called. When that is called then the options are able to be printed out
+
+**Steps to Run the Code:**
+
