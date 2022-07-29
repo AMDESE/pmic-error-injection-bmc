@@ -2,7 +2,6 @@
 import paramiko
 import sys
 import argparse
-
 ## @class Client
 # @brief class for PMIC Error Injection Tool
 ##
@@ -70,7 +69,6 @@ class Client:
 			self.command = "i3ctransfer -d/dev/i3c-" + self.channel_map_P1[channel_key_P1] + " -w 0x35,"
 		paramiko.SSHClient().set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-
 	##
 	# @brief: function that connects BMC through SSH and has commands for the error registers.
 	# 	 Calling this method in each other method allows the error registers to be printed
@@ -134,7 +132,7 @@ class Client:
 		output = output.replace(b'\n', b'')
 		print(output)
 		client.close()
-
+		print("\nAC Cycle required for system recovery if a fatal error is injected and DIMM is detected...")
 
 	##
 	# @brief: function calls the error_registers method to print the error
@@ -143,11 +141,11 @@ class Client:
 	##
 	def run_swa_over_voltage(self):
 		self.command = self.command + "0x90"
-		print("\nFatal Error has been injected on SWA...\n")
+		print("\nOver Voltage SWA is a Fatal error...\n")
 		print("Over Voltage Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nAC Cycle required for system recovery if DIMM is detected and is a fatal error...")
+
 
 	##
 	# @brief: function calls the error_registers method to print the error
@@ -156,9 +154,9 @@ class Client:
 	##
 	def run_swa_under_voltage(self):
 		self.command = self.command + "0x98"
-		print("\nFatal Error has been injected on SWA...\n")
+		print("\nUnder Voltage SWA is a Fatal error...\n")
 		print("Under Voltage Command: " + self.command + "\n")
-		print("\nAC Cycle required for system recovery if DIMM is detected and is a fatal error...")
+		self.err_reg()
 
 	##
 	# @brief: function calls the error_registers method to print the error
@@ -167,10 +165,10 @@ class Client:
 	##
 	def run_swb_over_voltage(self):
 		self.command = self.command + "0xA0"
-		print("\nVendor Specific Error has been injected on SWB...\n")
+		print("\nOver Voltage Vendor Specific Error SWB is a Fatal Error...\n")
 		print("Over Voltage Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
-		print("\nNo AC Cycle required for system recovery...")
+		self.err_reg()
 
 
 	##
@@ -180,10 +178,9 @@ class Client:
 	##
 	def run_swb_under_voltage(self):
 		self.command = self.command + "0xA8"
-		print("\nVendor Specific Error has been injected on SWB...\n")
+		print("\nUnder Voltage Vendor Specific Error SWB is a Fatal Error...\n")
 		print("Under Voltage Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
-		print("\nAC Cycle required for system recovery...")
 
 	##
 	# @brief: function calls the error_registers method to print the error
@@ -192,11 +189,10 @@ class Client:
 	##
 	def run_swc_over_voltage(self):
 		self.command = self.command + "0xB0"
-		print("\nFatal Error Injected into SWC...\n")
+		print("\nOver Voltage SWC is a Fatal Error...\n")
 		print("Over Voltage Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nAC Cycle required for system recovery if DIMM is detected and is a fatal error...")
 
 	##
 	# @brief function calls the error_registers method to print the error registers along with connecting to BMC to SSH
@@ -204,11 +200,10 @@ class Client:
 	##
 	def run_swc_under_voltage(self):
 		self.command = self.command + "0xB8"
-		print("\nFatal Error Injected into SWC...\n")
+		print("\nUnder Voltage SWC is a Fatal Error...\n")
 		print("Under Voltage Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nAC Cycle required for system recovery if DIMM is detected and is a fatal error...")
 
 	##
 	# @brief: function calls the error_registers method to print the error
@@ -217,12 +212,10 @@ class Client:
 	##
 	def run_swd_over_voltage(self):
 		self.command = self.command + "0xC0"
-		print("\nFatal Error Injected into SWD...")
+		print("\nOver Voltage SWD is a Fatal Error...")
 		print("\nOver Voltage Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nAC Cycle required for system recovery if DIMM is detected and is a fatal error...")
-
 
 	##
 	# @brief function calls the error_registers method to print the error registers along with connecting to BMC to SSH
@@ -230,11 +223,10 @@ class Client:
 	##
 	def run_swd_under_voltage(self):
 		self.command = self.command + "0xC8"
-		print("\nFatal Error Injected into SWD...")
+		print("\nUnder Voltage SWD is a Fatal Error...")
 		print("\nUnder Voltage Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nAC Cycle required for system recovery if DIMM is detected and is a fatal error...")
 
 	##
 	# @brief function calls the error_registers method to print the error registers along with connecting to BMC to SSH
@@ -242,11 +234,10 @@ class Client:
 	##
 	def run_VINBulk_over_voltage(self):
 		self.command = self.command + "0xD0"
+		print("\nOver Voltage VINBulk is a Fatal Error...\n")
 		print("\nOver Voltage Command: " + self.command)
-		print("\nFatal Error Injected into VINBULK...\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nAC Cycle required for system recovery if DIMM is detected and is a fatal error...")
 
 
 	##
@@ -255,11 +246,10 @@ class Client:
 	##
 	def run_VINBulk_under_voltage(self):
 		self.command = self.command + "0xD8"
+		print("\nUnder Voltage VINBulk is a Fatal Error...\n")
 		print("\nUnder Voltage Command: " + self.command)
-		print("\nFatal Error Injected into VINBULK...\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nAC Cycle required for system recovery if DIMM is detected and is a fatal error...")
 
 	##
 	# @brief function calls the error_registers method to print the error registers along with connecting to BMC to SSH
@@ -267,13 +257,10 @@ class Client:
 	##
 	def run_VINMgmt_over_voltage(self):
 		self.command = self.command + "0xE0"
-		print("\nNon-Fatal Error has been injected into VINMgmt...\n")
+		print("\nOver Voltage VinMgmt is a Non-Fatal Error...\n")
 		print("Over Voltage Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nNo AC Cycle required for system recovery...")
-
-
 
 	##
 	# @brief function calls the error_registers method to print the error registers along with connecting to BMC to SSH
@@ -281,11 +268,10 @@ class Client:
 	##
 	def run_VINMgmt_under_voltage(self):
 		self.command = self.command + "0xE8"
-		print("\nNon-Fatal Error has been injected into VINMgmt...\n")
+		print("\nUnder Voltage VINMgmt is a Non-Fatal Error...\n")
 		print("Under Voltage Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nNo AC Cycle required for system recovery...")
 
 
 	##
@@ -294,11 +280,10 @@ class Client:
 	##
 	def undefined(self):
 		self.command = self.command + "0x80"
-		print("\nNon-Fatal Error...\n")
+		print("\nUndefined is a Non-Fatal Error...\n")
 		print("Undefined Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nNo AC Cycle required for system recovery...")
 
 
 	##
@@ -307,11 +292,10 @@ class Client:
 	##
 	def VINMgmt_to_VINBulk_switchover(self):
 		self.command = self.command + "0x81"
-		print("\nNon-Fatal Error has been injected into VINMgmt to VINBulk Switchover...\n")
+		print("\nVINMgmt_to_VINBulk_switchover is a Non-Fatal Error...\n")
 		print("VINMgmt to VINBulk Switchover Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nNo AC Cycle required for system recovery...")
 
 
 	##
@@ -320,12 +304,10 @@ class Client:
 	##
 	def critical_temp_shutdown(self):
 		self.command = self.command + "0x82"
-		print("\nFatal Error has been injected into Critical Temperature Shutdown...\n")
+		print("\nCritical Temperature Shutdown is a Fatal Error...\n")
 		print("Critical Temperature Shutdown Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nAC Cycle required for system recovery...")
-
 
 	##
 	# @brief function calls the error_registers method to print the error registers along with connecting to BMC to SSH
@@ -333,25 +315,20 @@ class Client:
 	##
 	def high_temp_warning_threshold(self):
 		self.command = self.command + "0x83"
-		print("\nNon Fatal Error has been injected into High Temperature Warning Threshold...\n")
+		print("\nHigh Temperature Warning Threshold is a Non-Fatal Error...\n")
 		print("High Temperature Warning Threshold Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nNo AC Cycle required for system recovery...")
-
-
 	##
 	# @brief function calls the error_registers method to print the error registers along with connecting to BMC to SSH
 	# @return none
 	##
 	def power_good(self):
 		self.command = self.command + "0x84"
-		print("\nNon Fatal Error has been injected into VOUT 1.8 V LDO Power Good...\n")
+		print("\nVOUT 1.8 V LDO Power Good is a Non-Fatal Error...\n")
 		print("VOUT 1.8 V LDO Power Good Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nNo AC Cycle required for system recovery...")
-
 
 	##
 	# @brief function calls the error_registers method to print the error registers along with connecting to BMC to SSH
@@ -359,11 +336,10 @@ class Client:
 	##
 	def high_current_consumption(self):
 		self.command = self.command + "0x85"
-		print("\nNon Fatal Error has been injected into High Current Consumption Warning...\n")
+		print("\nHigh Current Consumption Warning is a Non-Fatal Error...\n")
 		print("High Current Consumption Warning Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
 		self.err_reg()
-		print("\nNo AC Cycle required for system recovery...")
 
 	##
 	# @brief function calls the error_registers method to print the error registers along with connecting to BMC to SSH
@@ -371,10 +347,9 @@ class Client:
 	##
 	def reserved(self):
 		self.command = self.command + "0x86"
-		print("\nNon Fatal Error has been injected into Reserved...\n")
+		print("\nReserved is a Non-Fatal Error...\n")
 		print("Reserved Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
-		print("\nNo AC Cycle required for system recovery...")
 		self.err_reg()
 
 	##
@@ -383,10 +358,9 @@ class Client:
 	##
 	def current_limiter_warning(self):
 		self.command = self.command + "0x87"
-		print("\nNon Fatal Error has been injected into Current Limiter Warning...\n")
+		print("\nCurrent Limiter Warning is a Non-Fatal Error...\n")
 		print("Current Limiter Warning Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
-		print("\nNo AC Cycle required for system recovery...")
 		self.err_reg()
 	##
 	# @brief function prints the menu of options
@@ -571,6 +545,7 @@ def main():
 	DIMMS = sys.argv[4].split("=")[1]
 	channel = sys.argv[5].split("=")[1]
 	c = Client(hostName, userName, password, DIMMS, channel)
+	print("This script should be exectued in s5 state!!!")
 	c.print_menu()
 if __name__ == "__main__":
 	main()
