@@ -9,7 +9,9 @@ import argparse
 	##
 	# @brief function that connects BMC through SSH
 	# @param [in] host ---name of the host
+	##
 class Client:
+	##
 	# @param [in] user ---username
 	# @param [in] password ---password
 	# @param [in] DIMMS ---P0 or P1
@@ -64,11 +66,25 @@ class Client:
 		channel_key_P1  = self.channel.upper()
 		if self.DIMMS == "P0":
 			self.command = "i3ctransfer -d/dev/i3c-" + self.channel_map_P0[channel_key_P0] + " -w 0x35,"
-
 		elif self.DIMMS == "P1":
 			self.command = "i3ctransfer -d/dev/i3c-" + self.channel_map_P1[channel_key_P1] + " -w 0x35,"
 		paramiko.SSHClient().set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
+
+	##
+	# @brief: sets i2c to i3c
+	# @return: none
+	##
+	def rebind(self):
+		client = paramiko.SSHClient()
+		client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+		client.connect(hostname = self.hostname, port = 22, username = self.username, password = self.password)
+		self.command = "/usr/sbin/dimm-re-bind.sh"
+		stdin, stdout, stderr = client.exec_command(self.command)
+		output = stdout.read()
+		output = output.replace(b'\n', b'')
+		print(output)
+		client.close()
 	##
 	# @brief: function that connects BMC through SSH and has commands for the error registers.
 	# 	 Calling this method in each other method allows the error registers to be printed
@@ -181,7 +197,7 @@ class Client:
 		print("\nUnder Voltage Vendor Specific Error SWB is a Fatal Error...\n")
 		print("Under Voltage Command: " + self.command + "\n")
 		print("{}: Channel {}: Harvesting Channel Error Registers\n".format(self.DIMMS, self.channel))
-
+		self.err_reg()
 	##
 	# @brief: function calls the error_registers method to print the error
 	#	  registers along with connecting to BMC to SSH
